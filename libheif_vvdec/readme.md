@@ -1,8 +1,8 @@
-Out-of-Bounds Read in `vvdec_push_data2()` Due to Missing Length Validation
+### Out-of-Bounds Read in `vvdec_push_data2()` Due to Missing Length Validation
 
 An out-of-bounds read vulnerability exists in `plugins/decoder_vvdec.cc` within the NAL unit parsing logic. The function parses a 32-bit NAL unit size from the input buffer and then copies `size` bytes into a vector without verifying that sufficient data remains in the buffer. An attacker could craft a HEIF file whose compressed data extent contains a length-prefixed NAL unit where the declared length exceeds the actual available data causing an out-of-bounds read.
 
-# Vulnerable code
+###  Vulnerable code
 
 ```c
 // libheif/plugins/decoder_vvdec.cc, lines 175–202
@@ -47,7 +47,7 @@ It seems like there's a similar function in `decoder_libde265.cc`,  `libde265_v1
         ...
 ```
 
-## POC
+###  POC
 
 A minimal but structurally valid HEIF file: [POC]()
 
