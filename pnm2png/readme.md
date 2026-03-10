@@ -1,4 +1,4 @@
-## Heap Buffer Overflow via Integer Overflow in `pnm2png` `row_bytes` Calculation
+## CVE-2026-3713: Heap Buffer Overflow via Integer Overflow in `pnm2png` `row_bytes` Calculation
 
 ### Overview
 
