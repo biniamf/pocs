@@ -1,14 +1,14 @@
-# Out-of-Bounds Read in `LibRaw::nikon_load_padded_packed_raw()` Due to Missing Buffer and Dimension Validation
+## Out-of-Bounds Read in `LibRaw::nikon_load_padded_packed_raw()` Due to Missing Buffer and Dimension Validation
 
 ---
 
-## Summary
+### Summary
 
 A heap out-of-bounds read exists in `LibRaw::nikon_load_padded_packed_raw()` (`src/decoders/decoders_libraw.cpp`). The function allocates a row buffer sized from the metadata field `load_flags` but iterates over image rows using `S.raw_width`, with no validation that the buffer is large enough for the width-derived access pattern. A crafted TIFF/NEF file with inconsistent `load_flags` and `raw_width` metadata triggers the overflow.
 
 ---
 
-## Technical Details
+### Technical Details
 
 - **Vulnerability Type:** Out-of-Bounds Read (`oob_read`)
 - **File:** `decoders/decoders_libraw.cpp`
@@ -94,15 +94,4 @@ Shadow bytes around the buggy address:
 =>0xe916283e0c00: 00 00 00 00 00 00 00 00 00 00 00 00[fa]fa fa fa
   0xe916283e0c80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
 ==13666==ABORTING
-```
-
-
-### Remediation
-
-Add a consistency check before allocating `buf`:
-
-```cpp
-size_t required = (size_t)(S.raw_width / 2) * 3;
-if (required > libraw_internal_data.unpacker_data.load_flags)
-    throw LIBRAW_EXCEPTION_IO_CORRUPT;
 ```
