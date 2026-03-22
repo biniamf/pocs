@@ -10,6 +10,10 @@ An Out-of-Bounds memory access vulnerability exists in `im_minpos_vec()` in `lib
 - **Function:** `im_minpos_vec()`
 - **Lines:** 4220–4222
 
+### Env
+- OS: Ubuntu 25.10, aarch64                                                                         
+- Vips: 8.19.0
+
 ### Root Cause
 
 `im_minpos_vec` calls `vips_min` with `"size", n` and then blindly copies `n` elements:
@@ -111,27 +115,4 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
 
 ```
 
-## Potential Fix
 
-Cap the copy length to the actual array size returned by `vips_min`, rather than the requested `n`:
-
-```c
-    // in im_minpos_vec() (same fix for im_maxpos_vec())
-    ...
-    
-    if (vips_min(im, &min,
-            "size", n,
-            "out_array", &out_array,
-            "x_array", &x_array,
-            "y_array", &y_array,
-            NULL))
-        return -1;
-
-    int n_actual = VIPS_AREA(x_array)->n;  /* actual elements returned */
-
-    memcpy(xpos,   VIPS_ARRAY_ADDR(x_array,   0), n_actual * sizeof(int));
-    memcpy(ypos,   VIPS_ARRAY_ADDR(y_array,   0), n_actual * sizeof(int));
-    memcpy(minima, VIPS_ARRAY_ADDR(out_array, 0), n_actual * sizeof(double));
-
-    ...
-```
