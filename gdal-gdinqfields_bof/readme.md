@@ -1,4 +1,4 @@
-## Heap buffer overflow in GDinqfields via unbounded strcat on caller-allocated buffer
+## Heap buffer overflow in GDAL's vendored HDF-EOS library via unbounded strcat in GDinqfields
 
 GDinqfields (frmts/hdf4/hdf-eos/GDapi.c) appends data field names into a caller-provided buffer using repeated strcat without bounds checking. The caller in HDF4EOSGridSubGroup::GetMDArrayNames (hdf4multidim.cpp) sizes the buffer with GDnentries(), which subtracts 2 bytes per entry under the assumption that every DataFieldName value in the HDF-EOS metadata is double-quoted. When a crafted HDF-EOS file supplies unquoted DataFieldName values (which pass all HDF library validation), GDnentries undercounts the required buffer by 2 bytes per field entry while GDinqfields writes the full name length — producing a heap buffer overflow of 2*N bytes for N field entries.
 
