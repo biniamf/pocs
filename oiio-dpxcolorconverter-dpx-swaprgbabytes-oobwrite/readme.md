@@ -1,4 +1,4 @@
-
+## Signed integer overflow in SwapRGBABytes loop index leads to out-of-bounds read/write in DPX ABGR decoder
 Note: we use the same poc file as in the QueryRGBBufferSizeInternal bug. 
 With unpatched code, the crash manifests as the [QueryRGBBufferSize 
 overflow](https://github.com/biniamf/pocs/tree/main/oiio-dpxcolorconverter-dpx-queryrgbbuffersize-intovf). After that fix is applied, the same file crashes at
