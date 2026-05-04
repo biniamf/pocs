@@ -1,4 +1,4 @@
-## Signed integer overflow in ConvertCbYCrYToRGB leads to heap out-of-bounds write in DPX 4:2:2 decoder
+## CVE-2026-43908: Signed integer overflow in ConvertCbYCrYToRGB leads to heap out-of-bounds write in DPX 4:2:2 decoder
 
 A signed 32-bit integer overflow in the pixel-loop index expression `i * 3` inside ConvertCbYCrYToRGB() causes the function to compute a large negative pointer offset into the output buffer, producing an out-of-bounds write that crashes the process. 
 
