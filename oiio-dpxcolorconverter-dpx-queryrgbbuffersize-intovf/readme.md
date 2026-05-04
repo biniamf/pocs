@@ -1,4 +1,4 @@
-## Integer overflow in QueryRGBBufferSizeInternal leads to heap out-of-bounds write in DPX decoder (kCbYCr and kABGR)
+## CVE-2026-43907: Integer overflow in QueryRGBBufferSizeInternal leads to heap out-of-bounds write in DPX decoder (kCbYCr and kABGR)
 
 A signed 32-bit integer overflow in QueryRGBBufferSizeInternal() affects two separate case branches, producing heap out-of-bounds writes via different descriptors:
 
