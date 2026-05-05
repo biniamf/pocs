@@ -1,4 +1,4 @@
-## Out-of-Bounds Read in `LibRaw::nikon_load_padded_packed_raw()` Due to Missing Buffer and Dimension Validation
+## CVE-2026-5342: Out-of-Bounds Read in `LibRaw::nikon_load_padded_packed_raw()` Due to Missing Buffer and Dimension Validation
 
 ---
 
