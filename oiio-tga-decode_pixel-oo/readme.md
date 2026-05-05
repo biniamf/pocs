@@ -1,4 +1,4 @@
-## Integer wraparound in bounds check of decode_pixel leads to out-of-bounds read in TGA paletted image decoder
+## CVE-2026-43996: Integer wraparound in bounds check of decode_pixel leads to out-of-bounds read in TGA paletted image decoder
 
 The bounds check in TGAInput::decode_pixel computes `k + palbytespp` as unsigned 32-bit
 arithmetic. When k = 0xFFFFFFFC and palbytespp = 4, the addition wraps to 0, which
