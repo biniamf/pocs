@@ -1,6 +1,6 @@
-# pocs
+# Proof-of-concept exploits
 
-Proof-of-concept files for vulnerabilities discovered in open-source libraries using a
+Proof-of-concept exploits for vulnerabilities discovered in open-source libraries using a
 research prototype for automated vulnerability discovery.
 
 Each subdirectory targets a specific bug and contains:
