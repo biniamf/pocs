@@ -1,4 +1,4 @@
-## Out-of-bounds read in GDAL's vendored HDF-EOS library via size_t underflow in GDSDfldsrch
+## CVE-2026-8213: Out-of-bounds read in GDAL's vendored HDF-EOS library via size_t underflow in GDSDfldsrch
 
 GDSDfldsrch (frmts/hdf4/hdf-eos/GDapi.c) strips quotes from a metadata-derived
 string using memmove(name, name+1, strlen(name)-2) and name[strlen(name)-2]=0
