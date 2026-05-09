@@ -1,4 +1,4 @@
-## Heap buffer overflow in GDAL's vendored HDF-EOS library via unbounded strcat in SWinqdims
+## CVE-2026-8086: Heap buffer overflow in GDAL's vendored HDF-EOS library via unbounded strcat in SWinqdims
 
 SWinqdims (frmts/hdf4/hdf-eos/SWapi.c) appends dimension names into a caller-
 provided buffer using repeated strcat without bounds checking. The caller in
