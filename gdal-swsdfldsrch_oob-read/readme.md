@@ -1,4 +1,4 @@
-## Out-of-bounds read in GDAL's vendored HDF-EOS library via size_t underflow in SWSDfldsrch
+## CVE-2026-8212: Out-of-bounds read in GDAL's vendored HDF-EOS library via size_t underflow in SWSDfldsrch
 
 SWSDfldsrch (frmts/hdf4/hdf-eos/SWapi.c) strips quotes from a metadata-derived
 string using memmove(name, name+1, strlen(name)-2) and name[strlen(name)-2]=0
