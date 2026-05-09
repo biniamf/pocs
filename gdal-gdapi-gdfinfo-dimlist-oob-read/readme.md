@@ -1,4 +1,4 @@
-## Out-of-bounds read in GDAL's vendored HDF-EOS library via size_t underflow in GDfieldinfo
+## CVE-2026-8088: Out-of-bounds read in GDAL's vendored HDF-EOS library via size_t underflow in GDfieldinfo
 
 GDfieldinfo (frmts/hdf4/hdf-eos/GDapi.c) strips parentheses from a DimList metadata value using memmove(utlstr, utlstr+1, strlen(utlstr)-2) and utlstr[strlen(utlstr)-2]=0 without checking that strlen(utlstr) >= 2. When a crafted HDF-EOS grid file supplies an empty or single-character DimList value, strlen(utlstr)-2 wraps to SIZE_MAX-1 (unsigned underflow), causing memmove to attempt a read of ~18 exabytes — immediate crash.
 
