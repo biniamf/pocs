@@ -1,4 +1,4 @@
-Missing upper-bound check on msg_len in lws_ssh_parse_plaintext() causes pre-auth OOM server kill via unbounded allocation
+## Missing upper-bound check on msg_len in lws_ssh_parse_plaintext() causes pre-auth OOM server kill via unbounded allocation
 
 plugins/protocol_lws_ssh_base/sshd.c:576 constructs pss->msg_len from 4
 attacker-controlled bytes without any upper-bound check. The only validation
@@ -9,7 +9,7 @@ heap allocation per connection. Repeated connections exhaust system memory,
 causing the server process (and potentially other processes) to be killed
 by the OOM killer.
 
-Version: 4.5.99-v4.5.0-382-g4a63b9333
+- Version: 4.5.99-v4.5.0-382-g4a63b9333
 
 
 Root cause (plugins/protocol_lws_ssh_base/sshd.c):
@@ -46,7 +46,7 @@ Root cause (plugins/protocol_lws_ssh_base/sshd.c):
     }
 ```
 
-Vulnerability flow:
+## Vulnerability flow:
 
     Attacker                              SSH Server (sshd.c)
     --------                              --------------------
@@ -86,7 +86,7 @@ Vulnerability flow:
     Total damage: 512 MB consumed, server dead, no authentication required
 
 
-PoC (attached file):
+### PoC (attached file):
   poc_sshd_unbounded_alloc.py  — Python script that opens multiple SSH
                                  connections, each sending a crafted 6-byte
                                  packet that triggers a 128 MB allocation
@@ -104,7 +104,8 @@ provided binary that accepts SSH connections via the lws-ssh-base plugin.
 Any application using this plugin is equally vulnerable.
 
 
-Build:
+### Build:
+  ```bash
     cd libwebsockets
     mkdir -p build && cd build
     cmake ../libwebsockets \
@@ -116,19 +117,24 @@ Build:
       -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined" \
       -DCMAKE_SHARED_LINKER_FLAGS="-fsanitize=address,undefined"
     make -j$(nproc) test-sshd
+  ```
 
 
-Run:
-    # Terminal 1: start server with 512 MB memory limit (just to prevent host crash)
-    systemd-run --scope --user -p MemoryMax=512M -p MemorySwapMax=0 \
-      env ASAN_OPTIONS="allocator_may_return_null=1:detect_odr_violation=0" \
-      ./build/bin/libwebsockets-test-sshd -d 7
+### Run:
 
-    # Terminal 2: run PoC
-    python3 poc_sshd_unbounded_alloc.py 127.0.0.1 2200
+```bash
+# Terminal 1: start server with 512 MB memory limit (just to prevent host crash)
+systemd-run --scope --user -p MemoryMax=512M -p MemorySwapMax=0 \
+  env ASAN_OPTIONS="allocator_may_return_null=1:detect_odr_violation=0" \
+  ./build/bin/libwebsockets-test-sshd -d 7
+```
 
+```bash
+# Terminal 2: run PoC
+python3 poc_sshd_unbounded_alloc.py 127.0.0.1 2200
+```
 
-Output:
+### Output:
 
 OOM kill evidence (systemd journal):
 
@@ -137,7 +143,7 @@ OOM kill evidence (systemd journal):
     run-p4239-i4240.scope: Consumed 303ms CPU time, 512M memory peak.
 
 
-Impact:
+### Impact:
   - Denial of Service — a single unauthenticated attacker can kill the SSH
     server by sending 20-byte crafted packets across a few TCP connections
   - System-wide impact — without cgroup memory limits, the unbounded
