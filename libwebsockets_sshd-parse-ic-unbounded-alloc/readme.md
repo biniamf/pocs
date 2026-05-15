@@ -91,17 +91,9 @@ Root cause (plugins/protocol_lws_ssh_base/sshd.c):
                                  connections, each sending a crafted 6-byte
                                  packet that triggers a 128 MB allocation
 
-The PoC connects to the SSH server, completes the banner exchange, then
-sends a minimal binary packet: 4-byte msg_len (0x08000000 = 128 MB),
-1-byte padding_length (0), 1-byte msg_id (20 = SSH_MSG_KEXINIT). It holds
-connections open and monitors server RSS via /proc/PID/status. The loop
-continues until the server process is killed by the OOM killer.
-
-The vulnerable code is in the SSH protocol plugin library
-(plugins/protocol_lws_ssh_base/sshd.c), not in the test binary.
-libwebsockets-test-sshd is used as the harness because it is the project's
-provided binary that accepts SSH connections via the lws-ssh-base plugin.
-Any application using this plugin is equally vulnerable.
+The vulnerable code is in the SSH protocol plugin library.
+libwebsockets-test-sshd was used as the harness that accepts SSH connections 
+via the lws-ssh-base plugin. Any application using this plugin is equally vulnerable.
 
 
 ### Build:
