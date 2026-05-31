@@ -1,4 +1,4 @@
-## Heap OOB read in debug/stack via crafted symbolmap slot_index in unmarshalled fiber
+## CVE-2026-10267: Heap OOB read in debug/stack via crafted symbolmap slot_index in unmarshalled fiber
 
 debug.c:353 reads stack[jsm.slot_index] without bounds checking against
 def->slotcount. The symbolmap is populated from attacker-controlled marshal
