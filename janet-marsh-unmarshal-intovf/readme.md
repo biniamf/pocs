@@ -1,4 +1,4 @@
-## CVE-2026-10267: Signed integer overflow in fiber deserialization leads to allocation-size corruption
+## CVE-2026-10268: Signed integer overflow in fiber deserialization leads to allocation-size corruption
 
 unmarshal_one_fiber() in marsh.c computes fiber->capacity = fiber_stacktop + 10
 (line 1114) where fiber_stacktop is read directly from attacker-controlled
