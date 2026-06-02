@@ -26,7 +26,7 @@ These files are provided for security research and responsible disclosure purpos
 
 ## Disclosure
 
-All vulnerabilities were reported to the respective maintainers prior to
+All vulnerabilities were reported to the respective vendors prior to
 publication. PoC files are shared for verification and research purposes only.
 
 
