@@ -1,4 +1,4 @@
-## CVE-2026-10650: Missing upper-bound check on msg_len in lws_ssh_parse_plaintext() causes pre-auth OOM server kill via unbounded allocation
+## CVE-2026-10650: Missing upper-bound check on msg_len in lws_ssh_parse_plaintext() causes pre-auth OOM server (remote) kill via unbounded allocation
 
 plugins/protocol_lws_ssh_base/sshd.c:576 constructs pss->msg_len from 4
 attacker-controlled bytes without any upper-bound check. The only validation
