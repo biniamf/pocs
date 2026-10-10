@@ -1,4 +1,4 @@
-## Write-before-check in LECP literal CBOR recording allows 1-byte OOB write past ctx->cbor[] into ctx->item
+## CVE-2026-78161: Write-before-check in LECP literal CBOR recording allows 1-byte OOB write past ctx->cbor[] into ctx->item
 
 lib/misc/lecp.c:391 writes ctx->cbor[ctx->cbor_pos++] = c before
 checking whether cbor_pos has reached sizeof(ctx->cbor) at line 392.
