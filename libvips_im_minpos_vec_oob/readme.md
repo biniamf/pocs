@@ -1,4 +1,4 @@
-## Heap Buffer Overflow (OOB Read) in `im_minpos_vec` — `memcpy` reads past end of array returned by `vips_min`
+## CVE-2026-6491: Heap Buffer Overflow (OOB Read) in `im_minpos_vec` — `memcpy` reads past end of array returned by `vips_min`
 
 ### Summary
 
