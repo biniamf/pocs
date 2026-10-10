@@ -1,4 +1,4 @@
-# Out-of-Bounds Write in `HuffTable::initval` Due to Missing Bounds Validation
+# CVE-2026-5318: Out-of-Bounds Write in `HuffTable::initval` Due to Missing Bounds Validation
 
 ## Summary
 
